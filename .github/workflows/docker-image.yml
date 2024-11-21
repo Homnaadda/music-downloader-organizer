@@ -34,7 +34,3 @@ jobs:
           shivachaudhary18/music-downloader:latest
           shivachaudhary18/music-downloader:${{ github.sha }}
           shivachaudhary18/music-downloader:alpha
-
-    - name: Image digest
-      id: image-digest
-      run: echo "Image digest: ${{ steps.build-and-push.outputs.digest }}"
