@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='music-disc.png') }}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Doto&family=Exo+2&display=swap" rel="stylesheet">
+    <title>Music Downloader and Organizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
+</head>
+<body>
+    <header class="header" style="display: flex; align-items: center; gap: 10px;">
+        <img src="{{ url_for('static', filename='music-disc.png') }}" alt="Music Disc Icon" class="header-icon">
+        <h1 style="font-family: 'Doto', sans-serif;">Music Downloader and Organizer</h1>
+    </header>
+    <div class="container">
+        <section class="downloader-section">
+            <h2 class="left-align">Downloader</h2>
+            <form id="download-form">
+                <input 
+                    type="text" 
+                    id="url" 
+                    name="url" 
+                    placeholder="Enter Spotify URL (Track/Playlist/Album)" 
+                    required
+                >
+                <button type="submit" class="action-button">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </form>
+            <div id="loading" class="loading-spinner" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <div id="status"></div>
+            <div id="downloads"></div>
+        </section>
+        <section class="organize-section">
+            <h2 class="left-align">Organize Music</h2>
+            <button id="organize-button" class="action-button">
+                <i class="fas fa-folder-open"></i> Organize Music
+            </button>
+            <div id="organize-loading" class="loading-spinner" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <div id="organize-status"></div>
+        </section>
+    </div>
+    <footer class="footer">
+        <p>Made with <i class="fas fa-heart" style="color: red;"></i> by Shiva Chaudhary</p>
+    </footer>
+</body>
+</html>
