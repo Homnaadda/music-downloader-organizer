@@ -7,23 +7,33 @@ body {
     justify-content: space-between;
     min-height: 100vh;
     margin: 0;
+    padding: 0;
 }
 
-.header, .footer {
-    text-align: center;
-    padding: 1rem 0.5rem;
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1rem;
     background-color: #121212;
     color: #f0f0f0;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.header-icon {
+    width: 40px;
+    height: 40px;
 }
 
 .header h1 {
-    margin: 0;
+    font-family: 'Doto', sans-serif;
     font-size: 1.5rem;
-}
-
-.footer p {
     margin: 0;
-    font-size: 0.9rem;
 }
 
 .container {
@@ -32,9 +42,10 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     max-width: 500px;
-    width: 100%;
-    margin: 2rem auto;
+    width: 90%;
+    margin: 5rem auto 2rem auto;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .downloader-section, .organize-section {
@@ -97,25 +108,53 @@ input {
     text-decoration: underline;
 }
 
+.footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #121212;
+    color: #f0f0f0;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 1rem;
-        margin: 1rem auto;
+        margin: 6rem auto 3rem auto;
     }
 
-    header, footer {
-        padding: 0.5rem;
-    }
-
-    button {
-        padding: 8px 16px;
-    }
-
-    .header h1, .footer p {
+    .header h1 {
         font-size: 1.2rem;
     }
 
     .left-align {
+        font-size: 1rem;
+    }
+
+    .action-button {
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .header-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .action-button {
+        font-size: 0.9rem;
+    }
+
+    .action-button i {
         font-size: 1rem;
     }
 }
