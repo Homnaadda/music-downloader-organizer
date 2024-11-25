@@ -11,21 +11,26 @@
     <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
 </head>
 <body>
-    <header class="header">
+    <header class="header" style="display: flex; align-items: center; gap: 10px;">
         <img src="{{ url_for('static', filename='music-disc.png') }}" alt="Music Disc Icon" class="header-icon">
-        <h1>Music Downloader and Organizer</h1>
+        <h1 style="font-family: 'Doto', sans-serif;">Music Downloader and Organizer</h1>
     </header>
     <div class="container">
         <section class="downloader-section">
             <h2 class="left-align">Downloader</h2>
             <form id="download-form">
-                <input 
-                    type="text" 
-                    id="url" 
-                    name="url" 
-                    placeholder="Enter Spotify URL (Track/Playlist/Album)" 
-                    required
-                >
+                <div class="input-container" style="position: relative; display: inline-block;">
+                    <input 
+                        type="text" 
+                        id="url" 
+                        name="url" 
+                        placeholder="Enter Spotify URL (Track/Playlist/Album)" 
+                        required
+                    >
+                    <span class="clear-button" id="clear-url" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </div>
                 <button type="submit" class="action-button">
                     <i class="fas fa-download"></i> Download
                 </button>
@@ -50,5 +55,10 @@
     <footer class="footer">
         <p>Made with <i class="fas fa-heart" style="color: red;"></i> by Shiva Chaudhary</p>
     </footer>
+    <script>
+        document.getElementById('clear-url').addEventListener('click', () => {
+            document.getElementById('url').value = '';
+        });
+    </script>
 </body>
 </html>

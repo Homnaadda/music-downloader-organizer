@@ -1,7 +1,7 @@
 import os
 import subprocess
 from flask import Flask, render_template, request, send_file, jsonify
-from organize_music import organize_music
+from organize_music import organize_music  # Import the updated organize_music function
 
 app = Flask(__name__)
 
@@ -69,11 +69,10 @@ def download_file(filename):
 @app.route('/organize', methods=['POST'])
 def organize():
     try:
-        organize_music()
+        organize_music()  # Calling the updated organize_music function
         return jsonify({"message": "Music organized successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

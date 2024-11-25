@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy project files
-COPY requirements.txt .
+COPY requirements.txt . 
 COPY app.py .
 COPY organize_music.py .
 COPY templates/ ./templates/
@@ -18,9 +18,6 @@ COPY static/ ./static/
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Install spotdl and additional dependencies for metadata handling
-RUN pip install spotdl mutagen requests
 
 # Create a directory for downloads and organized music
 RUN mkdir -p /app/downloads /app/downloads/organized

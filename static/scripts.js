@@ -4,10 +4,12 @@ document.getElementById('download-form').addEventListener('submit', async (e) =>
     const statusDiv = document.getElementById('status');
     const downloadsDiv = document.getElementById('downloads');
     const loadingSpinner = document.getElementById('loading');
+    const downloadButton = e.target.querySelector('button[type="submit"]');
 
     statusDiv.innerHTML = '';
     downloadsDiv.innerHTML = '';
     loadingSpinner.style.display = 'block';
+    downloadButton.disabled = true;
 
     try {
         const response = await fetch('/download', {
@@ -17,10 +19,11 @@ document.getElementById('download-form').addEventListener('submit', async (e) =>
 
         const data = await response.json();
         loadingSpinner.style.display = 'none';
+        downloadButton.disabled = false;
 
         if (response.ok) {
             statusDiv.innerHTML = data.message;
-            
+
             // Create download links for the files downloaded in the current event
             if (data.files) {
                 downloadsDiv.innerHTML = '';
@@ -37,6 +40,7 @@ document.getElementById('download-form').addEventListener('submit', async (e) =>
         }
     } catch (error) {
         loadingSpinner.style.display = 'none';
+        downloadButton.disabled = false;
         statusDiv.innerHTML = `Error: ${error.message}`;
     }
 });
@@ -44,17 +48,20 @@ document.getElementById('download-form').addEventListener('submit', async (e) =>
 document.getElementById('organize-button').addEventListener('click', async () => {
     const organizeStatusDiv = document.getElementById('organize-status');
     const organizeLoadingSpinner = document.getElementById('organize-loading');
+    const organizeButton = document.getElementById('organize-button');
 
     organizeStatusDiv.innerHTML = '';
     organizeLoadingSpinner.style.display = 'block';
+    organizeButton.disabled = true;
 
     try {
         const response = await fetch('/organize', {
             method: 'POST',
         });
 
-        // Ensure loading spinner is hidden regardless of outcome
         const data = await response.json();
+        organizeLoadingSpinner.style.display = 'none';
+        organizeButton.disabled = false;
 
         if (response.ok) {
             organizeStatusDiv.innerHTML = data.message;
@@ -62,8 +69,8 @@ document.getElementById('organize-button').addEventListener('click', async () =>
             organizeStatusDiv.innerHTML = `Error: ${data.error}`;
         }
     } catch (error) {
-        organizeStatusDiv.innerHTML = `Error: ${error.message}`;
-    } finally {
         organizeLoadingSpinner.style.display = 'none';
+        organizeButton.disabled = false;
+        organizeStatusDiv.innerHTML = `Error: ${error.message}`;
     }
 });
