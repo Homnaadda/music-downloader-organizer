@@ -38,8 +38,8 @@ body {
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    max-width: 500px;
-    width: calc(100% - 40px);
+    max-width: 600px;
+    width: calc(100% - 60px);
     margin: 2rem auto;
     text-align: center;
     word-wrap: break-word;
@@ -59,25 +59,24 @@ body {
 .input-container {
     position: relative;
     width: 100%;
-    padding-right: 0;
     box-sizing: border-box;
 }
 
 input {
-    width: calc(100% - 40px);
-    padding: 12px;
-    margin: 15px 0;
+    width: 100%;
+    padding: 12px 40px 12px 12px; /* Adjust padding to accommodate the clear button inside */
     border: 1px solid #444;
     border-radius: 8px;
     background-color: #333;
     color: #f0f0f0;
     font-size: 1rem;
     box-sizing: border-box;
+    margin: 0;
 }
 
 .clear-button {
     position: absolute;
-    right: 15px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -89,14 +88,17 @@ input {
     background-color: #1db954;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 1rem;
+    margin: 20px 0;
+    max-width: 200px;
+    width: 100%;
 }
 
 .action-button i {
@@ -130,7 +132,7 @@ input {
     .container {
         padding: 1.5rem;
         margin: 1.5rem auto;
-        width: 90%;
+        width: calc(100% - 30px);
     }
 
     .header, .footer {
@@ -143,7 +145,8 @@ input {
     }
 
     .action-button {
-        padding: 8px 16px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 
     .header h1, .footer p {
@@ -152,5 +155,19 @@ input {
 
     .left-align {
         font-size: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 700px;
+    }
+
+    .action-button {
+        max-width: 250px;
+    }
+
+    input {
+        width: 100%;
     }
 }
