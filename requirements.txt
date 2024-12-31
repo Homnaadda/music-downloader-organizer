@@ -3,3 +3,4 @@ requests
 spotdl
 mutagen
 ytmusicapi
+yt-dlp

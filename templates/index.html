@@ -1,64 +1,159 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ url_for('static', filename='music-disc.png') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Doto&family=Exo+2&display=swap" rel="stylesheet">
-    <title>Music Downloader and Organizer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Favicon -->
+  <link
+    rel="icon"
+    href="{{ url_for('static', filename='music-disc.png') }}"
+    type="image/png"
+  />
+  
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Doto&family=Exo+2&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Your Custom Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+
+  <!-- Page Title -->
+  <title>Music Downloader and Organizer</title>
+
+  <!-- Scripts (if any) -->
+  <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
 </head>
 <body>
-    <header class="header" style="display: flex; align-items: center; gap: 10px;">
-        <img src="{{ url_for('static', filename='music-disc.png') }}" alt="Music Disc Icon" class="header-icon">
-        <h1 style="font-family: 'Doto', sans-serif;">Music Downloader and Organizer</h1>
-    </header>
-    <div class="container">
-        <section class="downloader-section">
-            <h2 class="left-align">Downloader</h2>
-            <form id="download-form">
-                <div class="input-container" style="position: relative; display: inline-block;">
-                    <input 
-                        type="text" 
-                        id="url" 
-                        name="url" 
-                        placeholder="Enter Spotify URL (Track/Playlist/Album)" 
-                        required
-                    >
-                    <span class="clear-button" id="clear-url" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
-                        <i class="fas fa-times"></i>
-                    </span>
-                </div>
-                <button type="submit" class="action-button">
-                    <i class="fas fa-download"></i> Download
-                </button>
-            </form>
-            <div id="loading" class="loading-spinner" style="display: none;">
-                <i class="fas fa-spinner fa-spin"></i>
-            </div>
-            <div id="status"></div>
-            <div id="downloads"></div>
-        </section>
-        <section class="organize-section">
-            <h2 class="left-align">Organize Music</h2>
-            <button id="organize-button" class="action-button">
-                <i class="fas fa-folder-open"></i> Organize Music
-            </button>
-            <div id="organize-loading" class="loading-spinner" style="display: none;">
-                <i class="fas fa-spinner fa-spin"></i>
-            </div>
-            <div id="organize-status"></div>
-        </section>
-    </div>
-    <footer class="footer">
-        <p>Made with <i class="fas fa-heart" style="color: red;"></i> by Shiva Chaudhary</p>
-    </footer>
-    <script>
-        document.getElementById('clear-url').addEventListener('click', () => {
-            document.getElementById('url').value = '';
-        });
-    </script>
+  <!-- Header -->
+  <header class="header">
+    <img
+      src="{{ url_for('static', filename='music-disc.png') }}"
+      alt="Music Disc Icon"
+      class="header-icon"
+    />
+    <h1>Music Downloader and Organizer</h1>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Downloader Section -->
+    <section class="downloader-section">
+      <h2 class="left-align">Downloader</h2>
+      <p>
+        Enter a link from
+        <strong>Spotify</strong>,
+        <strong>YouTube</strong>, or
+        <strong>YouTube Music</strong> (track, playlist, or album).
+      </p>
+      <form id="download-form">
+        <div class="input-container" id="download-input-container">
+          <input
+            type="text"
+            id="url"
+            name="url"
+            placeholder="e.g. https://open.spotify.com/track/... or https://youtu.be/... or https://music.youtube.com/..."
+            required
+          />
+          <!-- Inline SVG for the clear 'X' icon -->
+          <span class="clear-button" id="clear-url">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 
+                   8.586l4.293-4.293a1 1 0 011.414 
+                   1.414L11.414 10l4.293 4.293a1 
+                   1 0 01-1.414 1.414L10 
+                   11.414l-4.293 4.293a1 1 0 
+                   01-1.414-1.414L8.586 
+                   10 4.293 5.707a1 1 0 
+                   010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div>
+        <button type="submit" class="action-button">
+          <!-- Inline SVG for 'Download' icon -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="white"
+            width="1.2em"
+            height="1.2em"
+            viewBox="0 0 24 24"
+            class="btn-icon"
+          >
+            <path
+              stroke="none"
+              d="M17 16v2a2 2 0 01-2 2H9a2 
+                 2 0 01-2-2v-2H5v2a4 4 0 
+                 004 4h6a4 4 0 004-4v-2h-2zm-5-1l5-5h-3V3H9v7H6l5 
+                 5z"
+            ></path>
+          </svg>
+          Download
+        </button>
+      </form>
+
+      <!-- Loading Spinner (simple CSS spinner) -->
+      <div id="loading" class="loading-spinner" style="display: none;"></div>
+
+      <!-- Status Messages -->
+      <div id="status"></div>
+      <div id="downloads"></div>
+    </section>
+
+    <!-- Organize Section -->
+    <section class="organize-section">
+      <h2 class="left-align">Organize Music</h2>
+      <button id="organize-button" class="action-button">
+        <!-- Inline SVG for a 'Folder' icon -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="white"
+          width="1.2em"
+          height="1.2em"
+          viewBox="0 0 24 24"
+          class="btn-icon"
+        >
+          <path
+            stroke="none"
+            d="M10 4H6a2 2 0 00-2 
+               2v12a2 2 0 002 2h12a2 2 
+               0 002-2V8a2 2 0 00-2-2h-8l-2-2zM6 
+               8h12v10H6V8z"
+          ></path>
+        </svg>
+        Organize Music
+      </button>
+      <div id="organize-loading" class="loading-spinner" style="display: none;"></div>
+      <div id="organize-status"></div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>
+      Made with
+      <span style="color: red;">♥</span>
+      by Shiva Chaudhary
+    </p>
+  </footer>
+
+  <!-- Clear Button Script -->
+  <script>
+    document.getElementById('clear-url').addEventListener('click', () => {
+      document.getElementById('url').value = '';
+    });
+  </script>
 </body>
 </html>
