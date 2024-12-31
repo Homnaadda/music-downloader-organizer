@@ -1,0 +1,58 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+*.egg
+*.egg-info/
+.eggs/
+*.pyc
+*.pyo
+*.pyd
+
+# ---- Virtual Environments ----
+# If you have a virtual environment named ".venv", "venv", or "env"
+venv/
+.venv/
+env/
+
+# ---- Byte-Compiled / Optimized / etc. ----
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# ---- Config / Credentials / Secrets (if any) ----
+.env
+*.env
+
+# ---- Logs and local data ----
+*.log
+logs/
+*.sqlite3
+instance/
+
+# ---- Mac / Windows specific files ----
+.DS_Store
+Thumbs.db
+
+# ---- Docker ----
+# Optional: if you don't want to commit Docker build caches
+docker-compose*.yaml
+*.env
+*.pid
+
+# ---- Downloads ----
+downloads/
+downloads/organized/
+
+# If you want to ensure "downloads" folder is never pushed to Git,
+# you can add it here. That way, large or transient files (like downloaded .mp3)
+# won't clutter your repo.
+
+# ---- Misc ----
+*.swp
+*.swo
+*.bak
