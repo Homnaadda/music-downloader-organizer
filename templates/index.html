@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <!-- Favicon -->
-  <link
-    rel="icon"
-    href="{{ url_for('static', filename='music-disc.png') }}"
-    type="image/png"
-  />
   
+  <link
+  rel="icon"
+  href="{{ url_for('static', filename='icon.png') }}"
+  type="image/png"
+  />
+
   <!-- Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Doto&family=Exo+2&display=swap"
@@ -21,11 +21,7 @@
   <!-- Your Custom Styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 
-  <!-- Page Title -->
   <title>Music Downloader and Organizer</title>
-
-  <!-- Scripts (if any) -->
-  <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
 </head>
 <body>
   <!-- Header -->
@@ -35,7 +31,12 @@
       alt="Music Disc Icon"
       class="header-icon"
     />
-    <h1>Music Downloader and Organizer</h1>
+    <h1 id="main-title">Music Downloader and Organizer</h1>
+
+    <!-- Night Mode Toggle Button (top-right corner) -->
+    <button id="night-mode-toggle" class="night-mode-toggle">
+      <img id="mode-icon" src="{{ url_for('static', filename='moon.png') }}" alt="Mode Icon" class="icon-image" />
+    </button>
   </header>
 
   <!-- Main Container -->
@@ -47,15 +48,16 @@
         Enter a link from
         <strong>Spotify</strong>,
         <strong>YouTube</strong>, or
-        <strong>YouTube Music</strong> (track, playlist, or album).
+        <strong>YouTube Music</strong> </br>
+        (track, playlist, or album).
       </p>
       <form id="download-form">
-        <div class="input-container" id="download-input-container">
+        <div class="input-container">
           <input
             type="text"
             id="url"
             name="url"
-            placeholder="e.g. https://open.spotify.com/track/... or https://youtu.be/... or https://music.youtube.com/..."
+            placeholder="https://open.spotify.com/track/awesome-song"
             required
           />
           <!-- Inline SVG for the clear 'X' icon -->
@@ -149,11 +151,7 @@
     </p>
   </footer>
 
-  <!-- Clear Button Script -->
-  <script>
-    document.getElementById('clear-url').addEventListener('click', () => {
-      document.getElementById('url').value = '';
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>
 </html>

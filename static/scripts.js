@@ -1,3 +1,4 @@
+// Existing logic for download form, etc.
 document.getElementById('download-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const url = document.getElementById('url').value;
@@ -16,15 +17,12 @@ document.getElementById('download-form').addEventListener('submit', async (e) =>
             method: 'POST',
             body: new FormData(e.target)
         });
-
         const data = await response.json();
         loadingSpinner.style.display = 'none';
         downloadButton.disabled = false;
 
         if (response.ok) {
             statusDiv.innerHTML = data.message;
-
-            // Create download links for the files downloaded in the current event
             if (data.files) {
                 downloadsDiv.innerHTML = '';
                 data.files.forEach(file => {
@@ -55,10 +53,7 @@ document.getElementById('organize-button').addEventListener('click', async () =>
     organizeButton.disabled = true;
 
     try {
-        const response = await fetch('/organize', {
-            method: 'POST',
-        });
-
+        const response = await fetch('/organize', { method: 'POST' });
         const data = await response.json();
         organizeLoadingSpinner.style.display = 'none';
         organizeButton.disabled = false;
@@ -73,4 +68,29 @@ document.getElementById('organize-button').addEventListener('click', async () =>
         organizeButton.disabled = false;
         organizeStatusDiv.innerHTML = `Error: ${error.message}`;
     }
+});
+
+// Clear URL
+document.getElementById('clear-url').addEventListener('click', () => {
+    document.getElementById('url').value = '';
+});
+
+/* Night Mode Toggle: Switch between sun.png and moon.png */
+document.addEventListener('DOMContentLoaded', () => {
+    const nightModeToggle = document.getElementById('night-mode-toggle');
+    const modeIcon = document.getElementById('mode-icon');
+
+    nightModeToggle.addEventListener('click', () => {
+        // Toggle the .night-mode class on body
+        document.body.classList.toggle('night-mode');
+
+        // Update the icon source based on the mode
+        if (document.body.classList.contains('night-mode')) {
+            modeIcon.src = "../static/sun.png"; // Use sun icon in dark mode
+            modeIcon.alt = 'Sun Icon';
+        } else {
+            modeIcon.src = "../static/moon.png"; // Use moon icon in light mode
+            modeIcon.alt = 'Moon Icon';
+        }
+    });
 });
