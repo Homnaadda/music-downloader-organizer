@@ -68,27 +68,32 @@ body.night-mode #main-title {
 }
 
 /* 3) NIGHT MODE TOGGLE (top-right corner in header) */
+/* Updated Night Mode Toggle */
 .night-mode-toggle {
-    position: absolute;
-    top: 15px;    /* adjust as needed */
-    right: 15px;  /* adjust as needed */
+    position: fixed; /* Fixed positioning to place it at the bottom-right */
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
     background: none;
     border: none;
     cursor: pointer;
     outline: none;
     padding: 0;
+    z-index: 1000; /* Ensure it appears above other content */
 }
 
 /* Icon Image Styles */
 .icon-image {
-    width: 24px; /* Adjust size as needed */
+    width: 24px;
     height: 24px;
     transition: transform 0.3s;
+    display: block;
+    margin: auto; /* Center the icon inside the button */
 }
 
 .night-mode-toggle:hover .icon-image {
-    transform: scale(1.1);
+    transform: scale(1.1); /* Slight zoom effect on hover */
 }
+
 
 /* 4) MAIN CONTAINER */
 .container {
