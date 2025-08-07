@@ -34,16 +34,15 @@ def download():
             ]
         elif any(domain in url.lower() for domain in ["youtube.com", "youtu.be", "music.youtube"]):
             # YouTube or YouTube Music -> use yt-dlp
-            #
-            # -x / --extract-audio: Download & extract only audio
-            # --audio-format mp3 : Convert to MP3
-            # -o ...             : Output filename pattern
-            #
+            # Enhanced yt-dlp command with better error handling
             command = [
                 'yt-dlp',
                 '-x',
                 '--audio-format', 'mp3',
+                '--ffmpeg-location', '/usr/bin/ffmpeg',
                 '-o', os.path.join(DOWNLOAD_DIR, '%(title)s.%(ext)s'),
+                '--no-warnings',
+                '--extract-flat', 'false',
                 url
             ]
         else:
@@ -66,20 +65,54 @@ def download():
         print("Return code:", result.returncode)
         print("========================")
 
-        if result.returncode == 0:
+        # Check if download was successful (even with post-processing warnings)
+        files_after = set(os.listdir(DOWNLOAD_DIR))
+        new_files = list(files_after - files_before)
+        
+        # Consider it successful if:
+        # 1. Return code is 0, OR
+        # 2. New files were created (download succeeded even if post-processing had issues)
+        download_successful = result.returncode == 0 or len(new_files) > 0
+        
+        # Check for specific error patterns that indicate actual download failure
+        stderr_lower = result.stderr.lower()
+        actual_download_failed = any(error in stderr_lower for error in [
+            'video unavailable',
+            'private video',
+            'video not found',
+            'unable to download',
+            'no video formats found',
+            'sign in to confirm',
+            'this video is not available'
+        ])
+        
+        if download_successful and not actual_download_failed:
             files_after = set(os.listdir(DOWNLOAD_DIR))
             new_files = list(files_after - files_before)
 
-            # Always return success if command succeeded, even if no new files detected
+            # Determine success message based on whether post-processing succeeded
+            if result.returncode == 0:
+                message = "Download completed successfully!"
+            else:
+                message = "Download completed! (Note: Audio conversion may need manual processing)"
+            
             return jsonify({
-                "message": "Download completed successfully!",
+                "message": message,
                 "files": new_files if new_files else [],
-                "success": True
+                "success": True,
+                "warning": result.returncode != 0
             }), 200
         else:
-            print(f"Download failed with return code: {result.returncode}")
+            # Provide more specific error messages
+            if actual_download_failed:
+                error_message = "Failed to download: Video may be private, unavailable, or region-restricted"
+            elif "ffmpeg" in result.stderr.lower() or "ffprobe" in result.stderr.lower():
+                error_message = "Download completed but audio conversion failed. Please try again or contact support."
+            else:
+                error_message = "Download failed. Please check the URL and try again."
+                
             return jsonify({
-                "error": "Download failed",
+                "error": error_message,
                 "details": result.stderr,
                 "success": False
             }), 500

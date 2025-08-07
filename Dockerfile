@@ -7,6 +7,7 @@ WORKDIR /app
 # Install system dependencies (including ffmpeg for conversions)
 RUN apt-get update && apt-get install -y \
     ffmpeg \
+    ffprobe \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy project files

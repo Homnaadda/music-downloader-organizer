@@ -418,6 +418,12 @@ body {
   border: 1px solid rgba(245, 101, 101, 0.2);
 }
 
+.status-warning {
+  background: rgba(237, 137, 54, 0.1);
+  color: var(--warning);
+  border: 1px solid rgba(237, 137, 54, 0.2);
+}
+
 /* Download links */
 .downloads-container {
   margin-top: 1.5rem;
