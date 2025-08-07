@@ -5,150 +5,148 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <!-- Favicon -->
-  
   <link
-  rel="icon"
-  href="{{ url_for('static', filename='icon.png') }}"
-  type="image/png"
+    rel="icon"
+    href="{{ url_for('static', filename='icon.png') }}"
+    type="image/png"
   />
 
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Doto&family=Exo+2&display=swap"
-    rel="stylesheet"
-  />
+  <!-- Preconnect to Google Fonts for better performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Your Custom Styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 
-  <title>Music Downloader and Organizer</title>
+  <title>Music Downloader & Organizer</title>
+  
+  <!-- Meta tags for better SEO and social sharing -->
+  <meta name="description" content="Download and organize music from Spotify, YouTube, and YouTube Music with our beautiful web interface.">
+  <meta name="keywords" content="music downloader, spotify downloader, youtube music, music organizer">
+  <meta property="og:title" content="Music Downloader & Organizer">
+  <meta property="og:description" content="Download and organize music from multiple platforms">
+  <meta property="og:type" content="website">
 </head>
 <body>
   <!-- Header -->
   <header class="header">
-    <img
-      src="{{ url_for('static', filename='music-disc.png') }}"
-      alt="Music Disc Icon"
-      class="header-icon"
-    />
-    <h1 id="main-title">Music Downloader and Organizer</h1>
-
-    <!-- Night Mode Toggle Button (top-right corner) -->
-    <button id="night-mode-toggle" class="night-mode-toggle">
-      <img id="mode-icon" src="{{ url_for('static', filename='moon.png') }}" alt="Mode Icon" class="icon-image" />
-    </button>
+    <div class="header-content">
+      <img
+        src="{{ url_for('static', filename='music-disc.png') }}"
+        alt="Music Disc Icon"
+        class="header-icon"
+      />
+      <div>
+        <h1 id="main-title">Music Downloader & Organizer</h1>
+        <p class="subtitle">Download and organize your favorite music from multiple platforms</p>
+      </div>
+    </div>
   </header>
+
+  <!-- Night Mode Toggle Button -->
+  <button id="night-mode-toggle" class="night-mode-toggle" aria-label="Toggle dark mode">
+    <img id="mode-icon" src="{{ url_for('static', filename='moon.png') }}" alt="Toggle theme" class="icon-image" />
+  </button>
 
   <!-- Main Container -->
   <div class="container">
     <!-- Downloader Section -->
     <section class="downloader-section">
-      <h2 class="left-align">Downloader</h2>
-      <p>
-        Enter a link from
-        <strong>Spotify</strong>,
-        <strong>YouTube</strong>, or
-        <strong>YouTube Music</strong> </br>
-        (track, playlist, or album).
-      </p>
-      <form id="download-form">
-        <div class="input-container">
-          <input
-            type="text"
-            id="url"
-            name="url"
-            placeholder="https://open.spotify.com/track/awesome-song"
-            required
-          />
-          <!-- Inline SVG for the clear 'X' icon -->
-          <span class="clear-button" id="clear-url">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 
-                   8.586l4.293-4.293a1 1 0 011.414 
-                   1.414L11.414 10l4.293 4.293a1 
-                   1 0 01-1.414 1.414L10 
-                   11.414l-4.293 4.293a1 1 0 
-                   01-1.414-1.414L8.586 
-                   10 4.293 5.707a1 1 0 
-                   010-1.414z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </span>
-        </div>
-        <button type="submit" class="action-button">
-          <!-- Inline SVG for 'Download' icon -->
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="white"
-            width="1.2em"
-            height="1.2em"
-            viewBox="0 0 24 24"
-            class="btn-icon"
-          >
-            <path
-              stroke="none"
-              d="M17 16v2a2 2 0 01-2 2H9a2 
-                 2 0 01-2-2v-2H5v2a4 4 0 
-                 004 4h6a4 4 0 004-4v-2h-2zm-5-1l5-5h-3V3H9v7H6l5 
-                 5z"
-            ></path>
+      <div class="section-header">
+        <div class="section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16" viewBox="0 0 24 24">
+            <path d="M17 16v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-2H5v2a4 4 0 004 4h6a4 4 0 004-4v-2h-2zm-5-1l5-5h-3V3H9v7H6l5 5z"/>
           </svg>
-          Download
+        </div>
+        <h2 class="section-title">Download Music</h2>
+      </div>
+      
+      <p class="section-description">
+        Enter a link from your favorite music platform to download tracks, playlists, or albums.
+      </p>
+      
+      <div class="supported-platforms">
+        <span class="platform-tag">Spotify</span>
+        <span class="platform-tag">YouTube</span>
+        <span class="platform-tag">YouTube Music</span>
+      </div>
+      
+      <form id="download-form">
+        <div class="form-group">
+          <div class="input-container">
+            <input
+              type="url"
+              id="url"
+              name="url"
+              class="form-input"
+              placeholder="https://open.spotify.com/track/awesome-song"
+              required
+              autocomplete="url"
+            />
+            <button type="button" class="clear-button" id="clear-url" aria-label="Clear URL">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <button type="submit" class="action-button" id="download-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 24 24" class="btn-icon">
+            <path d="M17 16v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-2H5v2a4 4 0 004 4h6a4 4 0 004-4v-2h-2zm-5-1l5-5h-3V3H9v7H6l5 5z"/>
+          </svg>
+          Download Music
         </button>
       </form>
 
-      <!-- Loading Spinner (simple CSS spinner) -->
-      <div id="loading" class="loading-spinner" style="display: none;"></div>
+      <!-- Loading Spinner -->
+      <div id="loading" class="loading-spinner" style="display: none;" aria-hidden="true"></div>
 
       <!-- Status Messages -->
-      <div id="status"></div>
+      <div id="status" role="status" aria-live="polite"></div>
+      
+      <!-- Downloads -->
       <div id="downloads"></div>
     </section>
 
     <!-- Organize Section -->
     <section class="organize-section">
-      <h2 class="left-align">Organize Music</h2>
+      <div class="section-header">
+        <div class="section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16" viewBox="0 0 24 24">
+            <path d="M10 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/>
+          </svg>
+        </div>
+        <h2 class="section-title">Organize Library</h2>
+      </div>
+      
+      <p class="section-description">
+        Automatically organize your downloaded music by artist and album with enhanced metadata and album artwork.
+      </p>
+      
       <button id="organize-button" class="action-button">
-        <!-- Inline SVG for a 'Folder' icon -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="white"
-          width="1.2em"
-          height="1.2em"
-          viewBox="0 0 24 24"
-          class="btn-icon"
-        >
-          <path
-            stroke="none"
-            d="M10 4H6a2 2 0 00-2 
-               2v12a2 2 0 002 2h12a2 2 
-               0 002-2V8a2 2 0 00-2-2h-8l-2-2zM6 
-               8h12v10H6V8z"
-          ></path>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 24 24" class="btn-icon">
+          <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+          <path d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"/>
         </svg>
         Organize Music
       </button>
-      <div id="organize-loading" class="loading-spinner" style="display: none;"></div>
-      <div id="organize-status"></div>
+      
+      <!-- Loading Spinner -->
+      <div id="organize-loading" class="loading-spinner" style="display: none;" aria-hidden="true"></div>
+      
+      <!-- Status Messages -->
+      <div id="organize-status" role="status" aria-live="polite"></div>
     </section>
   </div>
 
   <!-- Footer -->
   <footer class="footer">
-    <p>
-      Made with
-      <span style="color: red;">♥</span>
-      by Shiva Chaudhary
-    </p>
+    <div class="footer-content">
+      <p>
+        Made with <span class="heart">♥</span> by Shiva Chaudhary
+      </p>
+    </div>
   </footer>
 
   <!-- Scripts -->

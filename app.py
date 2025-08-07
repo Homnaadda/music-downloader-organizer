@@ -70,24 +70,27 @@ def download():
             files_after = set(os.listdir(DOWNLOAD_DIR))
             new_files = list(files_after - files_before)
 
-            if new_files:
-                return jsonify({
-                    "message": "Download successful",
-                    "files": new_files
-                }), 200
-            else:
-                return jsonify({"error": "No files downloaded"}), 400
+            # Always return success if command succeeded, even if no new files detected
+            return jsonify({
+                "message": "Download completed successfully!",
+                "files": new_files if new_files else [],
+                "success": True
+            }), 200
         else:
             print(f"Download failed with return code: {result.returncode}")
             return jsonify({
                 "error": "Download failed",
-                "details": result.stderr
+                "details": result.stderr,
+                "success": False
             }), 500
 
     except Exception as e:
         import traceback
         traceback.print_exc()
-        return jsonify({"error": str(e)}), 500
+        return jsonify({
+            "error": str(e),
+            "success": False
+        }), 500
 
 @app.route('/download/<filename>')
 def download_file(filename):

@@ -1,300 +1,564 @@
-/* 1) BODY: Default day mode (Mint Frost gradient) */
-body {
-    font-family: 'Exo 2', sans-serif;
-    background: linear-gradient(135deg, #bdf0d6 0%, #F0FCF5 100%) fixed;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    overflow: hidden; /* Remove scrollbars */
-    -ms-overflow-style: none; /* IE/Edge */
-    scrollbar-width: none; /* Firefox */
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* CSS Variables for consistent theming */
+:root {
+  /* Light theme colors */
+  --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --accent-primary: #667eea;
+  --accent-secondary: #764ba2;
+  --success: #48bb78;
+  --error: #f56565;
+  --warning: #ed8936;
+  --border: rgba(255, 255, 255, 0.2);
+  --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --blur: blur(20px);
 }
 
-body::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
-}
-
-
-/* Night mode: from #12100E to #2B4162 */
+/* Dark theme colors */
 body.night-mode {
-    background: linear-gradient(135deg, #12100E 0%, #2B4162 100%) fixed;
+  --bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --bg-secondary: rgba(26, 32, 44, 0.95);
+  --bg-card: rgba(45, 55, 72, 0.9);
+  --text-primary: #f7fafc;
+  --text-secondary: #e2e8f0;
+  --text-muted: #a0aec0;
+  --accent-primary: #63b3ed;
+  --accent-secondary: #9f7aea;
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
-/* 2) HEADER */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* Header */
 .header {
-    width: 100%;
-    padding: 1rem;
-    text-align: center;
-    color: #333;
-    position: relative; /* for absolutely-positioned button inside */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: transparent;
+  position: relative;
+  padding: 2rem 1rem;
+  text-align: center;
+  background: var(--bg-secondary);
+  backdrop-filter: var(--blur);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
-/* Title styling */
-#main-title {
-    margin: 0;
-    font-family: 'Doto', sans-serif;
-    font-size: 2rem;
-    position: relative;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-    animation: glow 1.5s ease-in-out infinite alternate;
-}
-
-/* Title changes color in night mode if you'd like a lighter color. */
-body.night-mode #main-title {
-    color: #f2f2f2;
-    text-shadow: none; /* or change the glow style */
-}
-
-@keyframes glow {
-    from {
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-    }
-    to {
-        text-shadow: 0 0 15px rgba(255, 255, 255, 1);
-    }
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .header-icon {
-    width: 60px;
-    height: 60px;
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  animation: float 3s ease-in-out infinite;
 }
 
-/* 3) NIGHT MODE TOGGLE (top-right corner in header) */
-/* Updated Night Mode Toggle */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+#main-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  text-align: center;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3)); }
+  to { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.6)); }
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-top: 0.5rem;
+}
+
+/* Night mode toggle */
 .night-mode-toggle {
-    position: fixed; /* Fixed positioning to place it at the bottom-right */
-    bottom: 20px; /* Distance from the bottom */
-    right: 20px; /* Distance from the right */
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    padding: 0;
-    z-index: 1000; /* Ensure it appears above other content */
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
 }
 
-/* Icon Image Styles */
+.night-mode-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 .icon-image {
-    width: 24px;
-    height: 24px;
-    transition: transform 0.3s;
-    display: block;
-    margin: auto; /* Center the icon inside the button */
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
 }
 
 .night-mode-toggle:hover .icon-image {
-    transform: scale(1.1); /* Slight zoom effect on hover */
+  transform: scale(1.1) rotate(15deg);
 }
 
-
-/* 4) MAIN CONTAINER */
+/* Main container */
 .container {
-    width: 100%;
-    max-width: 800px;
-    margin: 2rem auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    /* overflow: auto; Optional: Enable scrolling within container */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  align-items: start;
 }
 
-/* 5) CARD SECTIONS (downloader/organize) */
+/* Card sections */
 .downloader-section,
 .organize-section {
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 1.5rem 2rem;
-    margin: 1rem 0;
-    width: 100%;
-    max-width: 500px;
-    color: #333;
+  background: var(--bg-card);
+  backdrop-filter: var(--blur);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Night mode cards: darker background, lighter text */
-body.night-mode .downloader-section,
-body.night-mode .organize-section {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: #eee;
+.downloader-section::before,
+.organize-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 20px 20px 0 0;
 }
 
-.downloader-section h2,
-.organize-section h2 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
-}
-.downloader-section p {
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    color: #555; /* or #bbb in night mode */
-}
-body.night-mode .downloader-section p {
-    color: #bbb;
+.downloader-section:hover,
+.organize-section:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 
-/* 6) INPUT + CLEAR BUTTON */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-icon {
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.section-description {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.supported-platforms {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.platform-tag {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Form styling */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
 .input-container {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    box-sizing: border-box;
+  position: relative;
+  width: 100%;
 }
-input {
-    width: 100%;
-    padding: 0.75rem 2.5rem 0.75rem 0.75rem;
-    border: 1px solid #aaa;
-    border-radius: 6px;
-    font-size: 1rem;
-    color: #333;
-    box-sizing: border-box;
+
+.form-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  backdrop-filter: var(--blur);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.3s ease;
+  outline: none;
 }
-body.night-mode input {
-    background-color: #444;
-    color: #f2f2f2;
-    border-color: #666;
+
+.form-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
 }
 
 .clear-button {
-    position: absolute;
-    right: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #999;
-    font-size: 1rem;
-}
-body.night-mode .clear-button {
-    color: #ccc;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0.7;
 }
 
-/* 7) ACTION BUTTONS */
+.clear-button:hover {
+  opacity: 1;
+  background: var(--error);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Action buttons */
 .action-button {
-    font-family: 'Exo 2', sans-serif;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    padding: 0.75rem 1.25rem;
-    margin-top: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    
-    /* Day Mode background color */
-    background-color: #2BBBA3;
-    color: #fff;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.action-button i {
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
 }
+
+.action-button:hover::before {
+  left: 100%;
+}
+
 .action-button:hover {
-    background-color: #1FA890;
-    transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Use a different color in night mode (a darker background) */
-body.night-mode .action-button {
-    background-color: #444;
-    color: #fff;
-}
-body.night-mode .action-button:hover {
-    background-color: #333;
+.action-button:active {
+  transform: translateY(0);
 }
 
-/* If you want the icons in the button to respect your text color: */
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .btn-icon {
-    margin-right: 0.5rem;
-    flex-shrink: 0;
+  width: 20px;
+  height: 20px;
 }
 
-/* 8) LOADING SPINNER & DOWNLOAD LINKS */
+/* Loading spinner */
 .loading-spinner {
-    /* Give the spinner a fixed size */
-    width: 30px;
-    height: 30px;
-    margin: 1rem auto 0;
-    border: 4px solid #eee;
-    border-top-color: #2BBBA3;
-    border-radius: 50%;
-    
-    /* Spin animation */
-    animation: spin 1s linear infinite;
-    /* No text inside; it's purely a visual spinner */
-}
-body.night-mode .loading-spinner {
-        /* Give the spinner a fixed size */
-    width: 30px;
-    height: 30px;
-    margin: 1rem auto 0;
-    border: 4px solid #eee;
-    border-top-color: #777777;
-    border-radius: 50%;
-    
-    /* Spin animation */
-    animation: spin 1s linear infinite;
-    /* No text inside; it's purely a visual spinner */
+  width: 40px;
+  height: 40px;
+  margin: 1.5rem auto;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Status messages */
+.status-message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-success {
+  background: rgba(72, 187, 120, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(72, 187, 120, 0.2);
+}
+
+.status-error {
+  background: rgba(245, 101, 101, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(245, 101, 101, 0.2);
+}
+
+/* Download links */
+.downloads-container {
+  margin-top: 1.5rem;
+}
+
+.downloads-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .download-link {
-    display: block;
-    margin-top: 0.75rem;
-    color: #2BBBA3;
-    text-decoration: none;
-    word-wrap: break-word;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
 }
+
 .download-link:hover {
-    text-decoration: underline;
-}
-body.night-mode .download-link {
-    color: #777777;; /* matching spinner */
+  background: var(--accent-primary);
+  color: white;
+  transform: translateX(5px);
 }
 
-/* 9) FOOTER */
+.download-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+/* Footer */
 .footer {
-    background-color: transparent;
-    text-align: center;
-    width: 100%;
-    padding: 1rem;
-    color: #333;
-    font-size: 0.9rem;
-}
-body.night-mode .footer {
-    color: #ddd;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--bg-secondary);
+  backdrop-filter: var(--blur);
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  margin-top: 4rem;
 }
 
-/* 10) RESPONSIVE */
-@media (max-width: 600px) {
-    .header h1 {
-        font-size: 1.5rem;
-    }
-    .downloader-section,
-    .organize-section {
-        margin: 0.5rem;
-        padding: 1rem;
-    }
-    .action-button {
-        width: 100%;
-    }
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heart {
+  color: #e53e3e;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .downloader-section,
+  .organize-section {
+    padding: 1.5rem;
+  }
+  
+  #main-title {
+    font-size: 2rem;
+  }
+  
+  .night-mode-toggle {
+    bottom: 1rem;
+    right: 1rem;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .supported-platforms {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .form-input {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.action-button:focus,
+.form-input:focus,
+.night-mode-toggle:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: rgba(0, 0, 0, 0.5);
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  body.night-mode {
+    --border: rgba(255, 255, 255, 0.5);
+  }
 }
